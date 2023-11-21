@@ -1,0 +1,46 @@
+<h1>Civilization Population Growth</h1>
+
+<table style="width: 100%; text-align: center;">
+  <tr>
+    <th>Civilization Name</th>
+    <th>Population</th>
+    <th>Growth Rate</th>
+    <th>Current Year</th>
+    <th>Modify Year</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @civilizations.each do |civilization| %>
+    <tr>
+      <td><%= civilization.name %></td>
+      <td><%= number_with_delimiter(civilization.population, precision: 0) %></td>
+      <td><%= civilization.growth_rate %></td>
+      <td><%= civilization.current_year %></td>
+      <td style="display: flex; justify-content: center;">
+        <% [-10, -1, 1, 10].each do |year_change| %>
+          <%= button_to change_population_civilization_path(civilization.id, year_change: year_change), method: :put do %>
+            <%= year_change.positive? ? "+" : "" %><%= pluralize(year_change, 'year') %>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_civilization_path(civilization) %>
+        |
+        <%= link_to "Destroy", civilization_path(civilization), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
+<%= link_to new_civilization_path do %>
+  <div style="text-align: center;">
+    <button style="background-color: limegreen;">
+      New Civilization
+    </button>
+  </div>
+<% end %>

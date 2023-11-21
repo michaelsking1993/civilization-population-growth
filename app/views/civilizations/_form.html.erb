@@ -1,0 +1,51 @@
+<%= form_with model: @civilization do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <% @civilization.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :growth_rate %>
+    <%= form.number_field :growth_rate, in: 0.0..20000.0, step: 0.001 %>
+    <% @civilization.errors.full_messages_for(:growth_rate).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :population %>
+    <%= form.number_field :population, step: 1 %>
+    <% @civilization.errors.full_messages_for(:population).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :current_year %>
+    <%= form.number_field :current_year, value: @civilization.current_year || 2000 %>
+    <% @civilization.errors.full_messages_for(:population).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<!--  <div>-->
+    <%#= form.label :current_year %>
+    <%#= form.number_field :current_year %>
+<!--  </div>-->
+
+<% end %>
